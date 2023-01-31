@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,8 +16,7 @@ public class Outline {
   // with two spaces in front of each word.
   public static void question1() {
     List<String> words = getList();
-    System.out.println("1: ");
-    // YOUR CODE
+    words.forEach(s -> System.out.println("  " + s));
   }
 
   // Repeat this problem but without two spaces in front of each word.
@@ -25,7 +25,7 @@ public class Outline {
   public static void question2() {
     List<String> words = getList();
     System.out.println("2: ");
-    // YOUR CODE
+    words.forEach(Utils::printString);
   }
 
   // For each of the following lambda expressions (see Question 5 in Worksheet 2),
@@ -39,7 +39,9 @@ public class Outline {
   public static void question3() {
     List<String> words = getList();
     System.out.println("3:");
-    // YOUR CODE
+    words.stream()
+            .filter(s -> s.length() < 4)
+            .forEach(Utils::printString);
   }
 
 
@@ -54,7 +56,9 @@ public class Outline {
   public static void question4() {
     List<String> words = getList();
     System.out.println("4:");
-    // YOUR CODE
+    words.stream()
+            .map(s -> s + "!")
+            .forEach(Utils::printString);
   }
 
 
@@ -66,7 +70,13 @@ public class Outline {
   public static void question5() {
     List<String> words = getList();
     System.out.println("5a:");
-    // YOUR CODE
+    Optional<String> firstElement = words.stream()
+            .filter(s -> s.length() < 4)
+            .filter(s -> s.contains("e"))
+            .map(String::toUpperCase)
+            .findFirst();
+    firstElement.ifPresent(Utils::printString);
+
   }
 
 
@@ -78,7 +88,21 @@ public class Outline {
   public static void question6() {
     List<String> words = getList();
     System.out.println("6:");
-    // YOUR CODE
+    Optional<String> firstElement = words.stream()
+            .filter(s -> {
+              System.out.println(s);
+              return s.length() < 4;
+            })
+            .filter(s -> {
+              System.out.println(s);
+              return s.contains("e");
+            })
+            .map(s -> {
+              System.out.println(s);
+              return s.toUpperCase();
+            })
+            .findFirst();
+    firstElement.ifPresent(Utils::printString);
   }
 
   // (*) Produce a single String that is the result of concatenating the
@@ -90,7 +114,10 @@ public class Outline {
   public static void question7() {
     List<String> words = getList();
     System.out.println("7:");
-    // YOUR CODE
+    String word = words.stream()
+            .map(s -> s.toUpperCase())
+            .reduce("", (s1, s2) -> s1 + s2);
+    Utils.printString(word);
   }
 
 
@@ -102,7 +129,9 @@ public class Outline {
   public static void question8() {
     List<String> words = getList();
     System.out.println("8:");
-    // YOUR CODE
+    String word = words.stream()
+            .reduce("", (s1, s2) -> s1.toUpperCase() + s2.toUpperCase());
+    Utils.printString(word);
   }
 
   // (*) Produce a String that is all the words concatenated together, but
@@ -113,13 +142,23 @@ public class Outline {
   public static void question9() {
     List<String> words = getList();
     System.out.println("9:");
-    // YOUR CODE
+    String word = words.stream()
+            .map(s -> s + ",")
+            .reduce("", (s1, s2) -> s1 + s2);
+    Utils.printString(word.substring(0, word.length() - 1));
   }
 
   // CONTINUE WITH THE REST OF THE QUESTIONS
 
   public static void main(String... args) { // varargs alternative to String[]
     question1();
-
+    question2();
+    question3();
+    question4();
+    question5();
+    question6();
+    question7();
+    question8();
+    question9();
   }
 }
